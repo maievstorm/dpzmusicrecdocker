@@ -77,7 +77,12 @@ def get_file(file_name: str):
 
 
 
-@app.get("/hash/")
+@app.get("/hash")
 def hash_song():
     os.system('python main.py --hash 1')
+    return {"data": 'finish!!!'}
+
+@app.get("/hash")
+def check_song():
+    os.system('python main.py --recognize 1 --is_save 1')
     return {"data": 'finish!!!'}

@@ -77,6 +77,7 @@ def get_file(file_name: str):
 
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+@app.get("/hash/")
+def hash_song():
+    os.system('python main.py --hash 1')
+    return {"data": 'finish!!!'}

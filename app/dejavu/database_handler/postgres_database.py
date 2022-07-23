@@ -7,7 +7,7 @@ from dejavu.base_classes.common_database import CommonDatabase
 from dejavu.config.settings import (FIELD_FILE_SHA1, FIELD_FINGERPRINTED,
                                     FIELD_HASH, FIELD_OFFSET, FIELD_SONG_ID,
                                     FIELD_SONGNAME, FIELD_TOTAL_HASHES,
-                                    FINGERPRINTS_TABLENAME, SONGS_TABLENAME,CHECK_SONG_TABLENAME)
+                                    FINGERPRINTS_TABLENAME, SONGS_TABLENAME,CHECK_SONG_TABLENAME,DETAIL_CRAWL)
 
 
 class PostgreSQLDatabase(CommonDatabase):
@@ -106,6 +106,12 @@ class PostgreSQLDatabase(CommonDatabase):
         RETURNING "{FIELD_SONG_ID}";
     """
 
+    UPDATE_SONG_STATUS = f"""
+        update "{DETAIL_CRAWL}"
+            set status = '1'
+            where id = %s;
+    """
+
     # SELECTS
     SELECT = f"""
         SELECT "{FIELD_SONG_ID}", "{FIELD_OFFSET}"
@@ -196,6 +202,20 @@ class PostgreSQLDatabase(CommonDatabase):
         with self.cursor() as cur:
             cur.execute(self.INSERT_SONG, (song_id, song_name, file_hash, total_hashes))
             return cur.fetchone()[0]
+    
+    def update_song_status(self,song_id: int) -> int:
+        """
+        Inserts a song name into the database, returns the new
+        identifier of the song.
+
+        :param song_name: The name of the song.
+        :param file_hash: Hash from the fingerprinted file.
+        :param total_hashes: amount of hashes to be inserted on fingerprint table.
+        :return: the inserted id.
+        """
+        print(song_id)
+        with self.cursor() as cur:
+            cur.execute(self.UPDATE_SONG_STATUS, (song_id,))
 
     def __getstate__(self):
         return self._options,

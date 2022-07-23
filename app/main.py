@@ -68,7 +68,7 @@ class Utils:
             # exps = str(input('Enter condition:'))
             query = f"""
                 SELECT id,name,path FROM {self.DETAIL_CRAWL}
-                where status = '0' and item_type = 'official_song';
+                where status = '0' and item_type = 'official_song' order by id desc;
             """
             # cur.execute(query,[AsIs(exps)])
             cur.execute(query)
@@ -85,6 +85,9 @@ class Utils:
                     row_2 = '/'.join(list_path[1:])
                     song_info[row[0]] = [row[1], row_2]
                     # song_revert[row[1]] = [row[0],row[2]]
+                    print('bucket_name',bucket_name)
+                    print('row_2',row_2)
+
                     try:
                         self.client.fget_object(bucket_name=bucket_name, object_name=row_2,
                                                 file_path=f'{directory}/{row[0]}{tail}')

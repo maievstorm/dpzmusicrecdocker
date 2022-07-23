@@ -1,0 +1,1 @@
+client.fget_object(bucket_name='youtube',object_name='son_tung_mtp/NƠI NÀY CÓ ANH _ TEASER MUSIC VIDEO _ SƠN TÙNG M-TP-dhviMuktFdA.mp4',file_path='test.mp3')

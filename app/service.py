@@ -79,10 +79,10 @@ def get_file(file_name: str):
 
 @app.get("/hash")
 def hash_song():
-    os.system('python main.py --hash 1')
-    return {"data": 'finish!!!'}
+    os.system('nohup python main.py --hash 1 > hash.log &')
+    # return {"data": 'finish!!!'}
 
 @app.get("/check")
 def check_song():
-    os.system('python main.py --recognize 1 --is_save 1')
-    return {"data": 'finish!!!'}
+    os.system('nohup python main.py --recognize 1 --is_save 1 > check.log &')
+    # return {"data": 'finish!!!'}

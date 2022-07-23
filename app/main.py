@@ -108,7 +108,7 @@ class Utils:
             # exps = str(input('Enter condition:'))
             query = f"""
                 SELECT id,name,path FROM {self.DETAIL_CRAWL}
-                where item_type = 'check_song';
+                where item_type = 'check_song' and status = '0';
             """
             # cur.execute(query,[AsIs(exps)])
             cur.execute(query)
